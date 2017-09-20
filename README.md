@@ -1,7 +1,11 @@
 IMF: Inferred Model-based Fuzzer
 ========================
 
-IMF currently only supports macOS.
+IMF is a kernel API fuzzer that leverages an automated API model
+inferrence techinque proposed in our
+[paper](http://daramg.gift/paper/han-ccs2017.pdf) at CCS. IMF
+currently only supports macOS. To see how to configure and run
+IMF, see the followings.
 
 # Setup
 - python2.7
@@ -42,6 +46,9 @@ $ ./fuzz -f [log path] -s [seed] -b [bitlen] -r [rate] -l [# of max loops]
 ```
 
 # Authors
+
+This research project has been conducted by [SoftSec Lab](https://softsec.kaist.ac.kr) at KAIST.
+
 * [HyungSeok Han](http://daramg.gift/)
 * [Sang Kil Cha](https://softsec.kaist.ac.kr/~sangkilc/)
 
@@ -57,3 +64,7 @@ To cite our paper ([pdf](http://daramg.gift/paper/han-ccs2017.pdf)):
     pages = {0--0} // FIXME
 }
 ```
+
+# Acknowledgement
+
+The work was supported by Institute for Information & communications Technology Promotion (IITP) grant funded by the Korea government (MSIT).
