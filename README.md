@@ -8,11 +8,13 @@ currently only supports macOS. To see how to configure and run
 IMF, see the followings.
 
 # Setup
+
+## Requirements
 - python2.7
 - pypy
 - clang
 
-# How to run
+## How to run
 1. Generate hooking library for APIs
 ```
 $ ./gen-hook [output(hooking code) path]
@@ -44,6 +46,8 @@ $ clang -framework IOKit -framework CoreFoundation -arch i386 fuzz.c -o fuzz
 ```
 $ ./fuzz -f [log path] -s [seed] -b [bitlen] -r [rate] -l [# of max loops]
 ```
+
+7. You may want to run the generated fuzzer within a while loop.
 
 # Authors
 
