@@ -142,7 +142,7 @@ uint16_t get_rand(){
       read(fd,&seed,4);
       close(fd);
       FILE *fp = fopen(log_file,"a");
-      fprintf(fp,"seed: %ld, rate: %ld, bitlen: %ld max_loop: %ld\\n", seed, rate,
+      fprintf(fp,"seed: %ld, rate: %ld, bitlen: %ld, max_loop: %ld\\n", seed, rate,
               bitlen, max_loop);
       fclose(fp);
       sync();
