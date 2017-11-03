@@ -65,7 +65,7 @@ To cite our paper ([pdf](http://daramg.gift/paper/han-ccs2017.pdf)):
     title = {Inferred Model-based Fuzzing},
     booktitle = {Proceedings of the ACM Conference on Computer and Communications Security},
     year = {2017},
-    pages = {0--0} // FIXME
+    pages = {2345--2358}
 }
 ```
 
