@@ -49,6 +49,10 @@ $ ./fuzz -f [log path] -s [seed] -b [bitlen] -r [rate] -l [# of max loops]
 
 7. You may want to run the generated fuzzer within a while loop.
 
+# CVEs
+
+- CVE-2017-7159
+
 # Authors
 
 This research project has been conducted by [SoftSec Lab](https://softsec.kaist.ac.kr) at KAIST.
