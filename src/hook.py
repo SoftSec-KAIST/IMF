@@ -84,17 +84,41 @@ class ArgHook(basic.Arg):
         log_name = self.get_log_name()
         fmt = self.get_fmt()
 
+        # Some characters need to be escaped
+
+        if fmt == '\'\\"%s\\"\'':
+            ret += \
+            '''    {    /*   start escape string   */                       \n'''           + \
+            '''    size_t slen = strlen(%s);                                \n'''%log_name  + \
+            '''    char buf[4 * slen + 1]; char* buf_pos = buf;             \n'''           + \
+            '''    for(size_t i = 0; i < slen; i++) {                       \n'''           + \
+            '''        unsigned char ch = %s[i];                            \n'''%log_name  + \
+            '''        if(isalnum(ch)) {                                    \n'''           + \
+            '''            *buf_pos = ch;                                   \n'''           + \
+            '''            buf_pos++;                                       \n'''           + \
+            '''        }                                                    \n'''           + \
+            '''        else {                                               \n'''           + \
+            '''            char tmpbuf[6];                                  \n'''           + \
+            '''            snprintf(tmpbuf, sizeof(tmpbuf), "\\\\x%02x", ch); \n'''           + \
+            '''            buf_pos = stpcpy(buf_pos, tmpbuf);               \n'''           + \
+            '''        }                                                    \n'''           + \
+            '''    }                                                        \n'''           + \
+            '''    *buf_pos = '\\0';                                        \n'''
+
         ret += '\tif(%s) '%(self.valid_ptr())
         ret += '''fprintf(fp,"{'name':'%s','''%self.name
         ret += ''''value': %s,'''%fmt
         ret += ''''size' : 0x%%lx,'cnt':0x%%x,%s '''%add
-        ret += ''''data':[",%s, sizeof(%s),'''%(log_name, self.type)
+        ret += ''''data':[",%s, sizeof(%s),'''%("buf" if fmt == '\'\\"%s\\"\'' else log_name, self.type)
         ret += '''%s%s);\n '''%(self.get_opt('cnt'), add_arg)
 
         ret += '''\telse fprintf(fp,"{'name':'%s','''%self.name
         ret += ''''value': %s, '''%fmt
         ret += ''''size' : 0x%%lx,'cnt':'undefined',%s '''%add
-        ret += ''''data':[",%s,sizeof(%s)%s);\n'''%(log_name, self.type, add_arg)
+        ret += ''''data':[",%s,sizeof(%s)%s);\n'''%("buf" if fmt == '\'\\"%s\\"\'' else log_name, self.type, add_arg)
+
+        if fmt == '\'\\"%s\\"\'':
+            ret += '\t}    /*   end escape string   */\n'
 
         if self.is_ptr():
             ret += self.log_ptr()
